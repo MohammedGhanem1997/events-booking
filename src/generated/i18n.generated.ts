@@ -36,6 +36,7 @@ export type I18nTranslations = {
             "phoneNumber": string;
             "password": string;
             "confirmPassword": string;
+            "roleId": string;
         };
         "errors": {
             "userNotFound": string;

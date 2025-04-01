@@ -1,4 +1,5 @@
 import { Exclude, Expose } from 'class-transformer';
+import { Role } from 'src/modules/role/entities/role.entity';
 
 export class StaffResponseDto {
   id: number;
@@ -9,6 +10,7 @@ export class StaffResponseDto {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
+  role: Role | null;
 
   @Exclude()
   password: string;

@@ -7,10 +7,13 @@ import {
   Param,
   Delete,
   Put,
+  Query,
+  Logger,
 } from '@nestjs/common';
 import { UserIdentityService } from './user-identity.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { CreateStaffDto } from './dto/create-staff.dto';
 
 @Controller('user-identity')
 export class UserIdentityController {
@@ -29,14 +32,29 @@ export class UserIdentityController {
     return this.userIdentityService.updateCustomer(+id, updateeCustomerDto);
   }
 
+  @Get('customers/all')
+  findAllCustomers(@Query() query) {
+    return this.userIdentityService.findAllCustomers(query);
+  }
+
+  @Get('customers/:id')
+  findOneCustomer(@Param('id') id: string) {
+    return this.userIdentityService.findOneCustomer(+id);
+  }
+  // @Delete('customers/:id')
+  // deleteCustomer(@Param('id') id: string) {
+  //   return this.userIdentityService.deleteCustomer(+id);
+  // }
+
   @Post('staffs')
-  createStaff(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.userIdentityService.createCustomer(createCustomerDto);
+  createStaff(@Body() createStaffDto: CreateStaffDto) {
+    Logger.warn(createStaffDto);
+    return this.userIdentityService.createStaff(createStaffDto);
   }
 
   @Get('staffs/all')
-  findAll() {
-    return this.userIdentityService.findAllStaffs;
+  findAll(@Query() query) {
+    return this.userIdentityService.findAllStaffs(query);
   }
 
   @Get('staffs/:id')

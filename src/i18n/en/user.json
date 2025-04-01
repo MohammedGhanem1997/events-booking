@@ -15,7 +15,8 @@
     "lastName": "Last Name",
     "phoneNumber": "Phone Number",
     "password": "Password",
-    "confirmPassword": "Confirm Password"
+    "confirmPassword": "Confirm Password",
+    "roleId": "Role"
   
   
   },
@@ -28,5 +29,6 @@
     "invalidEmail": "Invalid email address",
     "adminCannotBeDeleted": "Admin user cannot be deleted",
     "userCannotBeDeleted": "User cannot be deleted"
+    
   }
 }
