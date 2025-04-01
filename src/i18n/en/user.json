@@ -15,8 +15,20 @@
     "lastName": "Last Name",
     "phoneNumber": "Phone Number",
     "password": "Password",
-    "confirmPassword": "Confirm Password"
+    "confirmPassword": "Confirm Password",
+    "roleId": "Role"
   
   
+  },
+  "errors": {
+    "userNotFound": "User not found",
+    "invalidCredentials": "Invalid credentials",
+    "emailAlreadyExists": "Email already exists",
+    "phoneNumberAlreadyExists": "Phone number already exists",
+    "passwordMismatch": "Passwords do not match",
+    "invalidEmail": "Invalid email address",
+    "adminCannotBeDeleted": "Admin user cannot be deleted",
+    "userCannotBeDeleted": "User cannot be deleted"
+    
   }
 }

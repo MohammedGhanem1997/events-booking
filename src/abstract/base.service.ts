@@ -13,31 +13,38 @@ import {
 } from 'nestjs-typeorm-paginate';
 import { SelectQueryBuilder } from 'typeorm';
 import { RESPONSE_MESSAGES } from '../types/responseMessages';
+import { I18nContext } from 'nestjs-i18n';
 
 export abstract class BaseService {
+  lang: string = I18nContext.current()?.lang;
+
+  constructor() {
+    this.lang = I18nContext.current()?.lang || 'ar';
+  }
+
   protected _getBadRequestError(message: string | object) {
     if (typeof message === 'object') {
-      message = JSON.stringify(message);
+      message = message[this.lang];
     }
 
     throw new BadRequestException({ message });
   }
   protected _getInternalServerError(message: string | any) {
     if (typeof message === 'object') {
-      message = JSON.stringify(message);
+      message = message[this.lang];
     }
     throw new InternalServerErrorException({ message });
   }
 
   protected _getNotFoundError(message: string | any) {
     if (typeof message === 'object') {
-      message = JSON.stringify(message);
+      message = message[this.lang];
     }
     throw new NotFoundException({ message });
   }
   protected _getUnauthorized(message: string | any) {
     if (typeof message === 'object') {
-      message = JSON.stringify(message);
+      message = message[this.lang];
     }
     throw new UnauthorizedException({ message });
   }
