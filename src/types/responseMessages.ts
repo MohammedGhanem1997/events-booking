@@ -8,6 +8,10 @@ export const RESPONSE_MESSAGES = {
       en: 'Not Found',
       ar: 'غير موجود',
     },
+    DELETED_SUCCESSFULLY: {
+      en: 'Deleted successfully',
+      ar: 'تم الحذف بنجاح',
+    },
     SOMETHING_WENT_WRONG: {
       en: 'Something Went Wrong',
       ar: 'حدث خطأ ما',

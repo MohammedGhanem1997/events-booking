@@ -37,6 +37,16 @@ export type I18nTranslations = {
             "password": string;
             "confirmPassword": string;
         };
+        "errors": {
+            "userNotFound": string;
+            "invalidCredentials": string;
+            "emailAlreadyExists": string;
+            "phoneNumberAlreadyExists": string;
+            "passwordMismatch": string;
+            "invalidEmail": string;
+            "adminCannotBeDeleted": string;
+            "userCannotBeDeleted": string;
+        };
     };
 };
 /* prettier-ignore */

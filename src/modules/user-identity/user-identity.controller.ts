@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { UserIdentityService } from './user-identity.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -16,30 +17,35 @@ export class UserIdentityController {
   constructor(private readonly userIdentityService: UserIdentityService) {}
 
   @Post('customers')
-  create(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.userIdentityService.create(createCustomerDto);
+  createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
+    return this.userIdentityService.createCustomer(createCustomerDto);
   }
 
-  @Get()
-  findAll() {
-    return this.userIdentityService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userIdentityService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
+  @Put('customers/:id')
+  updateCustomer(
     @Param('id') id: string,
     @Body() updateeCustomerDto: UpdateCustomerDto,
   ) {
-    return this.userIdentityService.update(+id, updateeCustomerDto);
+    return this.userIdentityService.updateCustomer(+id, updateeCustomerDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userIdentityService.remove(+id);
+  @Post('staffs')
+  createStaff(@Body() createCustomerDto: CreateCustomerDto) {
+    return this.userIdentityService.createCustomer(createCustomerDto);
+  }
+
+  @Get('staffs/all')
+  findAll() {
+    return this.userIdentityService.findAllStaffs;
+  }
+
+  @Get('staffs/:id')
+  findOne(@Param('id') id: string) {
+    return this.userIdentityService.findOneStaff(+id);
+  }
+
+  @Delete('staffs/:id')
+  deleteStaff(@Param('id') id: string) {
+    return this.userIdentityService.deleteStaff(+id);
   }
 }

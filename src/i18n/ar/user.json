@@ -18,5 +18,16 @@
     "password": "كلمة المرور",
     "confirmPassword": "تأكيد كلمة المرور"
    
+  },
+  "errors": {
+    "userNotFound": "المستخدم غير موجود",
+    "invalidCredentials": "بيانات الاعتماد غير صالحة",
+    "emailAlreadyExists": "البريد الإلكتروني موجود بالفعل",
+    "phoneNumberAlreadyExists": "رقم الهاتف موجود بالفعل",
+    "passwordMismatch": "كلمات المرور غير متطابقة",
+    "invalidEmail": "البريد الإلكتروني غير صالح",
+    "adminCannotBeDeleted": "لا يمكن حذف المستخدم المسؤول",
+    "userCannotBeDeleted": "لا يمكن حذف المستخدم"
   }
+
 }
