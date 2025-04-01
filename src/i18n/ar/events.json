@@ -1,0 +1,15 @@
+{
+  "validation": {
+    "required": "{field} مطلوب",
+    "invalidType": "{field} يجب أن يكون {type}",
+    "invalidNumber": "{field} يجب أن يكون رقمًا صالحًا",
+    "invalidDate": "{field} يجب أن يكون تاريخًا صالحًا",
+    "minLength": "{field} يجب أن يكون على الأقل {min} أحرف",
+    "maxLength": "{field} يجب أن يكون على الأكثر {max} أحرف"
+  },
+  "fields": {
+    "productId": "معرف المنتج"
+   
+   
+  }
+}

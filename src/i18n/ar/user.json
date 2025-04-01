@@ -1,0 +1,34 @@
+{
+  "validation": {
+    "required": "{field} مطلوب",
+    "invalidType": "{field} يجب أن يكون {type}",
+    "invalidNumber": "{field} يجب أن يكون رقمًا صالحًا",
+    "invalidDate": "{field} يجب أن يكون تاريخًا صالحًا",
+    "minLength": "{field} يجب أن يكون على الأقل {min} أحرف",
+    "maxLength": "{field} يجب أن يكون على الأكثر {max} أحرف",
+    "passwordMismatch":"{field} لا يتطابق",
+    "invalidEmail": "{field} يجب أن يكون عنوان بريد إلكتروني صالح"
+
+  },
+  "fields": {
+   "email": "البريد الإلكتروني",
+   "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "phoneNumber": "رقم الهاتف",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "roleId":"الدور"
+   
+  },
+  "errors": {
+    "userNotFound": "المستخدم غير موجود",
+    "invalidCredentials": "بيانات الاعتماد غير صالحة",
+    "emailAlreadyExists": "البريد الإلكتروني موجود بالفعل",
+    "phoneNumberAlreadyExists": "رقم الهاتف موجود بالفعل",
+    "passwordMismatch": "كلمات المرور غير متطابقة",
+    "invalidEmail": "البريد الإلكتروني غير صالح",
+    "adminCannotBeDeleted": "لا يمكن حذف المستخدم المسؤول",
+    "userCannotBeDeleted": "لا يمكن حذف المستخدم"
+  }
+
+}
