@@ -70,6 +70,13 @@ export class UserIdentityService extends BaseService {
     return customer;
   }
 
+  async findCustomerByEmail(email: string) {
+    const customer = await this.customerRepo.findOne({ where: { email } });
+    if (!customer) {
+      this._getBadRequestError(this.i18n.t('user.errors.userNotFound'));
+    }
+    return customer;
+  }
   async findAllCustomers(query) {
     const allowedFieldsToSort = [
       'firstName',
@@ -182,7 +189,16 @@ export class UserIdentityService extends BaseService {
     const staff = await qr.getOne();
     return staff;
   }
-
+  async findeStaffByEmail(email: string) {
+    let qr = this.staffRepo
+      .createQueryBuilder('staff')
+      .leftJoinAndSelect('staff.role', 'role')
+      .leftJoinAndSelect('role.permissions', 'permissions')
+      .select(['staff', 'role', 'permissions'])
+      .where('staff.email = :email', { email });
+    const staff = await qr.getOne();
+    return staff;
+  }
   async updateStaff(id: number, data: Partial<Staff>) {
     await this.staffRepo.update(id, data);
     return this.staffRepo.findOne({ where: { id }, relations: ['role'] });
