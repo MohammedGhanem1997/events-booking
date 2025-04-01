@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from './entities/customer.entity';
 import { Repository } from 'typeorm';
 import { BaseService } from 'src/abstract';
+import { plainToInstance } from 'class-transformer';
+import { CustomerResponseDto } from './dto/response-customer.dto';
 
 @Injectable()
 export class UserIdentityService extends BaseService {
@@ -13,10 +15,13 @@ export class UserIdentityService extends BaseService {
   ) {
     super();
   }
-  create(createCustomerDto: CreateCustomerDto) {
+  async create(
+    createCustomerDto: CreateCustomerDto,
+  ): Promise<CustomerResponseDto> {
     try {
-      const customer = this.customerRepo.create(createCustomerDto);
-      return this.customerRepo.save(customer);
+      const createCustomer = this.customerRepo.create(createCustomerDto);
+      const customer = await this.customerRepo.save(createCustomer);
+      return plainToInstance(CustomerResponseDto, customer);
     } catch (error) {
       Logger.error(error);
       this.customErrorHandle(error);
