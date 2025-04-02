@@ -10,6 +10,7 @@ import { join } from 'path';
 import { RoleModule } from './modules/role/role.module';
 import { PermissionModule } from './modules/permission/permission.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { EventsModule } from './modules/events/events.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { AuthModule } from './modules/auth/auth.module';
     RoleModule,
     PermissionModule,
     AuthModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
