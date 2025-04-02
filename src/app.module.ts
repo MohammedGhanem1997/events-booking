@@ -11,6 +11,7 @@ import { RoleModule } from './modules/role/role.module';
 import { PermissionModule } from './modules/permission/permission.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { EventsModule } from './modules/events/events.module';
+import { TicketsModule } from './modules/tickets/tickets.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { EventsModule } from './modules/events/events.module';
     PermissionModule,
     AuthModule,
     EventsModule,
+    TicketsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
