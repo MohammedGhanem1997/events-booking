@@ -11,8 +11,11 @@ export class PermissionGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = await context.switchToHttp().getRequest();
     const url = request.url.trim();
-    const slug = url.split('/');
-    if (request?.user) {
+    const slug = url.split('v1/');
+    if (
+      request?.user &&
+      (request?.user.role === null || request?.user.role.id)
+    ) {
       const userRecord: any = await this.userIdentityService.findeStaffByEmail(
         request?.user?.email,
       );

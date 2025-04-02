@@ -15,7 +15,7 @@ export class AuthService extends BaseService {
   constructor(
     private jwtService: JwtService,
     private userIdentityService: UserIdentityService,
-    private roleService: RoleService,
+    private permissionService: PermissionService,
     @InjectRepository(Customer) private customerRepo: Repository<Customer>,
     @InjectRepository(Staff) private staffRepo: Repository<Staff>,
   ) {
@@ -26,16 +26,19 @@ export class AuthService extends BaseService {
     const user =
       (await this.userIdentityService.findCustomerByEmail(email)) ||
       (await this.userIdentityService.findeStaffByEmail(email));
+    console.log(user);
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const { password, ...result } = user;
+      console.log(result);
+
       return result;
     }
     return null;
   }
 
   async login(user: any) {
-    const payload = { email: user.email, sub: user.id, role: user.role?.name };
+    const payload = { email: user.email, sub: user.id, role: user.role };
     return {
       access_token: this.jwtService.sign(payload),
     };
@@ -43,41 +46,49 @@ export class AuthService extends BaseService {
 
   async getPermission(staffDetails: any, slug: string, action: string) {
     try {
-      let method = '';
+      // Map HTTP methods to your custom actions
+      let permissionAction: string;
       switch (action) {
         case Actions.GET:
-          method = Actions.VIEW;
-          break;
-        case Actions.PATCH:
-          method = Actions.UPDATE;
-          break;
-        case Actions.DELETE:
-          method = Actions.DELETE;
+          permissionAction = Actions.VIEW;
           break;
         case Actions.POST:
-          method = Actions.ADD;
+          permissionAction = Actions.ADD;
+          break;
+        case Actions.PUT:
+        case Actions.PATCH:
+          permissionAction = Actions.UPDATE;
+          break;
+        case Actions.DELETE:
+          permissionAction = Actions.DELETE;
           break;
         default:
-          break;
+          permissionAction = action; // Use directly if custom action
       }
-      const staffPermissions =
-        await this.roleService.getStaffPermissions(staffDetails);
-      let returnRes: any = false;
 
-      for (const x of staffPermissions) {
-        const path = x?.urlPath;
-        const actionName = x?.action;
+      const staffPermissions = await this.permissionService.getPermissions(
+        staffDetails.id,
+      );
 
-        if (path === slug && actionName === method) {
-          returnRes = true;
-        }
+      if (!staffPermissions) {
+        throw new Error('No permissions found');
       }
-      if (returnRes) {
-        return true;
+
+      // Check for exact path and action match
+      const hasPermission = staffPermissions.some(
+        (permission) =>
+          permission.path === slug && permission.action === permissionAction,
+      );
+
+      if (!hasPermission) {
+        throw new Error('Permission Denied');
       }
-      throw this._getUnauthorized('Permission Denied');
+
+      return true;
     } catch (error) {
+      // Use your custom error handler
       this.customErrorHandle(error);
+      return false;
     }
   }
 }

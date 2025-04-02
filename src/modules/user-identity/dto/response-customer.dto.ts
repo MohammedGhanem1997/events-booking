@@ -8,10 +8,11 @@ export class CustomerResponseDto {
   phoneNumber: string;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt: Date | null;
 
   @Exclude()
   password: string;
+  @Exclude()
+  deletedAt: Date | null;
 
   constructor(partial: Partial<CustomerResponseDto>) {
     Object.assign(this, partial);

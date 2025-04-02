@@ -63,18 +63,22 @@ export class UserIdentityService extends BaseService {
     }
   }
   async findOneCustomer(id: number) {
-    const customer = await this.customerRepo.findOne({ where: { id } });
-    if (!customer) {
-      this._getBadRequestError(this.i18n.t('user.errors.userNotFound'));
+    try {
+      const customer = await this.customerRepo.findOne({ where: { id } });
+      if (!customer) {
+        this._getBadRequestError(this.i18n.t('user.errors.userNotFound'));
+      }
+      return plainToInstance(CustomerResponseDto, customer);
+    } catch (error) {
+      this.customErrorHandle(error);
     }
-    return customer;
   }
 
   async findCustomerByEmail(email: string) {
     const customer = await this.customerRepo.findOne({ where: { email } });
-    if (!customer) {
-      this._getBadRequestError(this.i18n.t('user.errors.userNotFound'));
-    }
+    // if (!customer) {
+    //   this._getBadRequestError(this.i18n.t('user.errors.userNotFound'));
+    // }
     return customer;
   }
   async findAllCustomers(query) {
@@ -180,14 +184,22 @@ export class UserIdentityService extends BaseService {
   }
 
   async findOneStaff(id: number) {
-    let qr = this.staffRepo
-      .createQueryBuilder('staff')
-      .leftJoinAndSelect('staff.role', 'role')
-      .leftJoinAndSelect('role.permissions', 'permissions')
-      .select(['staff', 'role', 'permissions.id', 'permissions.name'])
-      .where('staff.id = :id', { id });
-    const staff = await qr.getOne();
-    return staff;
+    try {
+      let qr = this.staffRepo
+        .createQueryBuilder('staff')
+        .leftJoinAndSelect('staff.role', 'role')
+        .leftJoinAndSelect('role.permissions', 'permissions')
+        .select(['staff', 'role', 'permissions.id', 'permissions.name'])
+        .where('staff.id = :id', { id });
+      const staff = await qr.getOne();
+      if (!staff) {
+        this._getBadRequestError(this.i18n.t('user.errors.userNotFound'));
+      }
+      return plainToInstance(StaffResponseDto, staff);
+    } catch (error) {
+      Logger.error(error);
+      this.customErrorHandle(error);
+    }
   }
   async findeStaffByEmail(email: string) {
     let qr = this.staffRepo
@@ -200,8 +212,25 @@ export class UserIdentityService extends BaseService {
     return staff;
   }
   async updateStaff(id: number, data: Partial<Staff>) {
-    await this.staffRepo.update(id, data);
-    return this.staffRepo.findOne({ where: { id }, relations: ['role'] });
+    try {
+      const staff = await this.findOneStaff(id);
+      if (!staff) {
+        this._getBadRequestError(this.i18n.t('user.errors.userNotFound'));
+      }
+
+      if (data.password) {
+        data.password = await bcrypt.hash(data.password, 10);
+      }
+      let updateStaff = await this.staffRepo.preload({
+        id: id,
+        ...data,
+      });
+      let newStaff = await this.staffRepo.save(updateStaff);
+      return plainToInstance(StaffResponseDto, newStaff);
+    } catch (error) {
+      Logger.error(error);
+      this.customErrorHandle(error);
+    }
   }
 
   async findAllStaffs(query) {

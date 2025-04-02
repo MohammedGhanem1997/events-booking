@@ -10,10 +10,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { UserIdentityService } from '../user-identity/user-identity.service';
+import { PermissionService } from '../permission/permission.service';
+import { RoleService } from '../role/role.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Customer, Staff, Role, Permission]),
+    TypeOrmModule.forFeature([Customer, Staff, Role, Permission, RoleService]),
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'supersecret',
@@ -21,7 +23,13 @@ import { UserIdentityService } from '../user-identity/user-identity.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, UserIdentityService],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    UserIdentityService,
+    PermissionService,
+    RoleService,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}
