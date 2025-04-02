@@ -18,6 +18,7 @@
     "password": "كلمة المرور",
     "confirmPassword": "تأكيد كلمة المرور",
     "roleId":"الدور"
+    
    
   },
   "errors": {

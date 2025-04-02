@@ -18,6 +18,21 @@ export type I18nTranslations = {
             "productId": string;
         };
     };
+    "role": {
+        "validation": {
+            "required": string;
+            "invalidType": string;
+            "invalidNumber": string;
+            "invalidDate": string;
+            "minLength": string;
+            "maxLength": string;
+        };
+        "fields": {
+            "name": string;
+            "role": string;
+            "permissions": string;
+        };
+    };
     "user": {
         "validation": {
             "required": string;

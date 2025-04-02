@@ -11,7 +11,7 @@ export class Role extends BaseEntityWithId {
   @OneToMany(() => Staff, (staff) => staff.role)
   staff: Staff[];
 
-  @ManyToMany(() => Permission)
+  @ManyToMany(() => Permission, { cascade: true })
   @JoinTable()
   permissions: Permission[];
 }

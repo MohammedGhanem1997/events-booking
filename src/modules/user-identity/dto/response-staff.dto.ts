@@ -9,11 +9,13 @@ export class StaffResponseDto {
   phoneNumber: string;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt: Date | null;
   role: Role | null;
 
   @Exclude()
   password: string;
+
+  @Exclude()
+  deletedAt: Date | null;
 
   constructor(partial: Partial<StaffResponseDto>) {
     Object.assign(this, partial);

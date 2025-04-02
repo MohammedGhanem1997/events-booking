@@ -9,6 +9,7 @@ import { HeaderResolver, I18nModule } from 'nestjs-i18n';
 import { join } from 'path';
 import { RoleModule } from './modules/role/role.module';
 import { PermissionModule } from './modules/permission/permission.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { PermissionModule } from './modules/permission/permission.module';
     UserIdentityModule,
     RoleModule,
     PermissionModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
