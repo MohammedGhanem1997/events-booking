@@ -10,6 +10,11 @@ import { join } from 'path';
 import { RoleModule } from './modules/role/role.module';
 import { PermissionModule } from './modules/permission/permission.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { EventsModule } from './modules/events/events.module';
+import { TicketsModule } from './modules/tickets/tickets.module';
+import { SearchModule } from './modules/search/search.module';
+import { OrdersModule } from './modules/orders/orders.module';
+import elasticsearchConfig from './config/elasticsearch.config';
 
 @Module({
   imports: [
@@ -26,7 +31,7 @@ import { AuthModule } from './modules/auth/auth.module';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig],
+      load: [databaseConfig, elasticsearchConfig],
     }),
 
     TypeOrmModule.forRootAsync({
@@ -34,10 +39,28 @@ import { AuthModule } from './modules/auth/auth.module';
       useFactory: async (configService: ConfigService) =>
         configService.get('database'),
     }),
+
+    // ElasticsearchModule.registerAsync({
+    //   useFactory: () => ({
+    //     node: 'http://127.0.0.1:9200',
+    //     maxRetries: 10,
+    //     requestTimeout: 60000,
+    //     pingTimeout: 60000,
+    //     sniffOnStart: true,
+    //     auth: {
+    //       username: 'elastic',
+    //       password: 'YourNewPassword',
+    //     },
+    //   }),
+    // }),
     UserIdentityModule,
     RoleModule,
     PermissionModule,
     AuthModule,
+    EventsModule,
+    TicketsModule,
+    SearchModule,
+    OrdersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -20,12 +20,12 @@ export class OwnGuard implements CanActivate {
 
       // Inject userId into query parameters
       if (request.method === 'GET' || request.method === 'DELETE') {
-        request.query.userId = userId;
+        request.query.customerId = userId;
       } else if (request.method === 'POST' || request.method === 'PUT') {
-        if (request.body.userId && request.body.userId !== userId) {
+        if (request.body.customerId && request.body.customerId !== userId) {
           throw new ForbiddenException('You can only access your own data.');
         }
-        request.body.userId = userId;
+        request.body.customerId = userId;
       }
     }
 
