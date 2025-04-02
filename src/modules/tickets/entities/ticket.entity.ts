@@ -1,5 +1,6 @@
 import { BaseEntityWithId } from 'src/abstract';
 import { Event } from 'src/modules/events/entities/event.entity';
+import { OrderItem } from 'src/modules/orders/entities/rder-item.entity';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
@@ -18,7 +19,6 @@ export class Ticket extends BaseEntityWithId {
 
   @Column()
   quantityTotal: number;
-
-  //   @OneToMany(() => Order, (order) => order.ticket)
-  //   orders: Order[];
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.ticket)
+  orderItems: OrderItem[];
 }

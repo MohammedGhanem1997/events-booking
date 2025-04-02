@@ -13,14 +13,14 @@ export class Event extends BaseEntityWithMeta {
   @Column()
   location: string;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'timestamp' })
   startDate: Date;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'timestamp' })
   endDate: Date;
 
-  @OneToMany(() => Ticket, (ticket) => ticket.event)
-  tickets: Ticket[];
+  @OneToMany(() => Ticket, (ticket) => ticket.event, { nullable: true })
+  tickets?: Ticket[];
 
   @Column({ default: true })
   isActive: boolean;
