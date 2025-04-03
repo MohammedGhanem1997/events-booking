@@ -14,6 +14,7 @@ import { CreateOrderDto } from '../orders/dto/create-order.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { RESPONSE_MESSAGES } from 'src/types/responseMessages';
 import { IPaginationMeta, Pagination } from 'nestjs-typeorm-paginate';
+import { AuditLogService } from '../audit-log/audit-log.service';
 
 @Injectable()
 export class EventsService extends BaseService {
@@ -26,6 +27,7 @@ export class EventsService extends BaseService {
     @InjectRepository(OrderItem)
     private readonly orderItemRepository: Repository<OrderItem>,
     private readonly logger: Logger,
+    private auditLogService: AuditLogService,
 
     @InjectRepository(Customer)
     private readonly customerRepository: Repository<Customer>,
@@ -33,7 +35,10 @@ export class EventsService extends BaseService {
     super();
   }
 
-  async createEvent(createEventDto: CreateEventDto): Promise<Event> {
+  async createEvent(
+    createEventDto: CreateEventDto,
+    staffId?: number,
+  ): Promise<Event> {
     const event = this.eventRepository.create({
       ...createEventDto,
     });
@@ -41,7 +46,13 @@ export class EventsService extends BaseService {
 
     // Index in Elasticsearch
     // await this.searchService.indexEvent(savedEvent);
-
+    await this.auditLogService.logCreate(
+      'Event',
+      savedEvent.id,
+      savedEvent,
+      staffId,
+      createEventDto,
+    );
     return savedEvent;
   }
 
@@ -269,11 +280,21 @@ export class EventsService extends BaseService {
       }
     }
 
-    Object.assign(event, updateEventDto);
-    return this.eventRepository.save(event);
+    const updatedEvent = await this.eventRepository.save(event);
+
+    await this.auditLogService.logUpdate(
+      'Event',
+      id,
+      event,
+      updatedEvent,
+      updateEventDto.updatedBy,
+      updateEventDto,
+    );
+
+    return updatedEvent;
   }
 
-  async deleteEvent(id: number): Promise<object> {
+  async deleteEvent(id: number, user?: number): Promise<object> {
     try {
       const event = await this.eventRepository.findOne({
         where: { id },
@@ -301,6 +322,9 @@ export class EventsService extends BaseService {
         // Hard delete if no orders
         await this.eventRepository.remove(event);
       }
+      await this.auditLogService.logDelete('Event', id, event, user, {
+        message: RESPONSE_MESSAGES.COMMON.DELETED_SUCCESSFULLY,
+      });
       return {
         message: RESPONSE_MESSAGES.COMMON.DELETED_SUCCESSFULLY,
       };

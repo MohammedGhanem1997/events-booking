@@ -9,7 +9,7 @@ import {
   Delete,
   Query,
   UseGuards,
-  UsePipes,
+  Request,
   ValidationPipe,
   ParseIntPipe,
   Req,
@@ -27,7 +27,7 @@ export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, OwnGuard)
   create(@Body() createEventDto: CreateEventDto) {
     return this.eventsService.createEvent(createEventDto);
   }
@@ -52,7 +52,7 @@ export class EventsController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, OwnGuard)
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateEventDto: UpdateEventDto,
@@ -61,9 +61,10 @@ export class EventsController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.eventsService.deleteEvent(id);
+  @UseGuards(JwtAuthGuard, OwnGuard)
+  remove(@Param('id', ParseIntPipe) id: number, @Request() req) {
+    let user = req.user.id;
+    return this.eventsService.deleteEvent(id, user);
   }
 
   // @Post(':id/tickets')

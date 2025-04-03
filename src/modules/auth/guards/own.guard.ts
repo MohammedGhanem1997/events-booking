@@ -13,10 +13,10 @@ export class OwnGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
+    const userId = user.id;
 
     // If the user has no role, assume it's a customer
     if (!user.role) {
-      const userId = user.id;
       console.log('userId->', userId);
 
       // Inject userId into query parameters
@@ -27,6 +27,13 @@ export class OwnGuard implements CanActivate {
           throw new ForbiddenException('You can only access your own data.');
         }
         request.body.customerId = userId;
+      }
+    } else {
+      if (request.method === 'POST') {
+        request.body.createdBy = userId.toString();
+      }
+      if (request.method === 'PUT') {
+        request.body.updatedBy = userId.toString();
       }
     }
 

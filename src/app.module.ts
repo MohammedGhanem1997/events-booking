@@ -17,7 +17,10 @@ import { OrdersModule } from './modules/orders/orders.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import elasticsearchConfig from './config/elasticsearch.config';
 import { CacheModule } from '@nestjs/cache-manager';
+import { AuditLogModule } from './modules/audit-log/audit-log.module';
 import rabbitmqConfig from './config/rabbitmq.config';
+import { AuditInterceptor } from './modules/audit-log/audit.interceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -71,8 +74,15 @@ import rabbitmqConfig from './config/rabbitmq.config';
     SearchModule,
     OrdersModule,
     NotificationsModule,
+    AuditLogModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuditInterceptor,
+    },
+  ],
 })
 export class AppModule {}
