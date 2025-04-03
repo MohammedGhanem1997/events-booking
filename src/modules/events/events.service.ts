@@ -138,8 +138,8 @@ export class EventsService extends BaseService {
         .createQueryBuilder('event')
         .leftJoinAndSelect('event.tickets', 'ticket')
         .leftJoinAndSelect('ticket.orderItems', 'orderItem')
-        .where('event.isActive = :isActive', { isActive: true })
-        .andWhere('event.endDate > :now', { now: new Date() });
+        .where('event.isActive = :isActive', { isActive: true });
+      // .andWhere('event.endDate > :now', { now: new Date() });
 
       // Filtering
       if (query.name) {

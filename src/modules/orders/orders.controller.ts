@@ -12,6 +12,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.auth.guard';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ConfirmOrderDto } from './dto/confirm-order.dto';
+import { OwnGuard } from '../auth/guards/own.guard';
 
 @Controller('orders')
 @UseGuards(JwtAuthGuard)
@@ -52,11 +53,13 @@ export class OrdersController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard, OwnGuard)
   async findAllForCustomer(@Request() req) {
     return this.ordersService.findOrdersByCustomer(req.user.id);
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard, OwnGuard)
   async findOne(@Param('id') id: number, @Request() req) {
     return this.ordersService.findOrderById(id, req.user.id);
   }
