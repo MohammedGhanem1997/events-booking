@@ -13,21 +13,23 @@ export class NotificationsConsumer implements OnModuleInit, OnModuleDestroy {
     private readonly smsProviderService: MisrSmsServiceProvider,
     private readonly configService: ConfigService,
   ) {}
-
-  private SMS_API_URL = this.configService.get<string>('SMS_API_URL');
   private rabbitmqUser = this.configService.get<string>(
     'RABBITMQ_DEFAULT_USER',
+    'guest',
   );
   private rabbitmqPass = this.configService.get<string>(
     'RABBITMQ_DEFAULT_PASS',
+    'guest',
   );
   private rabbitmqHost = this.configService.get<string>(
     'RABBITMQ_HOST',
-    'rabbitmq',
+    'localhost',
   );
   private rabbitmqPort = this.configService.get<number>('RABBITMQ_PORT', 5672);
 
   async onModuleInit() {
+    console.log('rabbit initiate connection');
+
     await this.connectToRabbitMQ();
   }
 
@@ -39,8 +41,6 @@ export class NotificationsConsumer implements OnModuleInit, OnModuleDestroy {
     try {
       const rabbitmqUrl = `amqp://${this.rabbitmqUser}:${this.rabbitmqPass}@${this.rabbitmqHost}:${this.rabbitmqPort}`;
       console.log('Connecting to RabbitMQ:', rabbitmqUrl);
-      console.log('sms config', this.SMS_API_URL);
-      console.log('API SMS', this.configService.get('SMS_ID'));
 
       this.connection = await amqp.connect(rabbitmqUrl);
       this.channel = await this.connection.createChannel();

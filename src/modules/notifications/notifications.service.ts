@@ -9,13 +9,15 @@ export class NotificationsService {
 
   public async publishOrderCreated(order: Order) {
     const rabbitmqUser = this.configService.get<string>(
-      'rabbitmq.RABBITMQ_DEFAULT_USER',
+      'RABBITMQ_DEFAULT_USER',
+      'guest',
     );
     const rabbitmqPass = this.configService.get<string>(
-      'rabbitmq.RABBITMQ_DEFAULT_PASS',
+      'RABBITMQ_DEFAULT_PASS',
+      'guest',
     );
     const rabbitmqHost = this.configService.get<string>(
-      'rabbitmq.RABBITMQ_HOST',
+      'RABBITMQ_HOST',
       'localhost',
     );
     const rabbitmqPort = this.configService.get<number>(

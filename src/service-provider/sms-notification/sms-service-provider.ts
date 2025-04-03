@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 
@@ -5,14 +6,12 @@ interface SmsServiceProvider {
   sendSms(to: string, message: string): Promise<boolean>;
 }
 
-export class MisrSmsServiceProvider implements SmsServiceProvider {
-  private apiUrl: string;
-  private apiKey: string;
+@Injectable()
+export class MisrSmsServiceProvider {
+  constructor(private readonly configService: ConfigService) {}
 
-  constructor(private configService: ConfigService) {
-    this.apiUrl = this.configService.get<string>('SMS_MISR_URL');
-    this.apiKey = this.configService.get<string>('SMS_MISR_KEY');
-  }
+  private apiUrl = this.configService.get<string>('SMS_MISR_URL');
+  private apiKey = this.configService.get<string>('SMS_MISR_KEY');
 
   async sendSms(to: string, message: string): Promise<boolean> {
     try {
