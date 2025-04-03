@@ -9,11 +9,13 @@ import { AuthModule } from '../auth/auth.module';
 import { EventsService } from '../events/events.service';
 import { Customer } from '../user-identity/entities/customer.entity';
 import { NotificationsService } from '../notifications/notifications.service';
+import { EventsModule } from '../events/events.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Order, OrderItem, Event, Ticket, Customer]),
     AuthModule,
+    EventsModule,
   ],
   controllers: [OrdersController],
   providers: [OrdersService, EventsService, Logger, NotificationsService],
