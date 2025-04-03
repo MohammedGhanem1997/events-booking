@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: event-booking
     restart: always
+    command: ["sh", "-c", "sleep 10 && npm run migration:run && npm run start:dev"]
     ports:
       - "3000:3000"
     environment:
@@ -15,15 +16,17 @@ services:
       - DB_USER=myuser
       - DB_PASSWORD=mypass
       - DB_NAME=event_booking
-      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_HOST=localhost
       - ELASTICSEARCH_PORT=9200
-      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_HOST=localhost
       - RABBITMQ_PORT=5672
       - RABBITMQ_USER=guest
       - RABBITMQ_PASSWORD=guest
     volumes:
       - .:/app
       - /app/node_modules
+    depends_on:
+      - postgres
       
   postgres:
     image: postgres:15
