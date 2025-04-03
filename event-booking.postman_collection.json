@@ -1,0 +1,1249 @@
+{
+	"info": {
+		"_postman_id": "54069a44-2bae-43fa-85cf-e015d3caa2e6",
+		"name": "event-booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20436926"
+	},
+	"item": [
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "create and   register customer",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"customer@example.com\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"phoneNumber\": \"+1234567890\",\r\n    \"password\": \"SecurePassword123!\",\r\n    \"confirmPassword\": \"SecurePassword123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/user-identity/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user-identity",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update customer",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"customer8@example.com\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"phoneNumber\": \"+1234567890\",\r\n    \"password\": \"SecurePassword123!\",\r\n    \"confirmPassword\": \"SecurePassword123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/user-identity/customers/8",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user-identity",
+								"customers",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/user-identity/customers/8",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user-identity",
+								"customers",
+								"8"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/user-identity/customers/8",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user-identity",
+										"customers",
+										"8"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "182"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b6-L0Pr5g7YEMPAgOwrmHWtjm4VQJM\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 02 Apr 2025 02:02:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"updatedAt\": \"2025-04-01T23:47:27.823Z\",\n    \"createdAt\": \"2025-04-01T04:34:39.558Z\",\n    \"id\": 8,\n    \"email\": \"customer8@example.com\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"phoneNumber\": \"+1234567890\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/user-identity/customers/all",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user-identity",
+								"customers",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "staffs",
+			"item": [
+				{
+					"name": "create staffs",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"customer0@example.com\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"phoneNumber\": \"+1234567890\",\r\n    \"password\": \"SecurePassword123!\",\r\n    \"confirmPassword\": \"SecurePassword123!\",\r\n    \"role\":null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/user-identity/staffs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user-identity",
+								"staffs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update staffs",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"phoneNumber\": \"+1234567890\",\r\n    \"password\": \"SecurePassword123!\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/user-identity/staffs/8",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user-identity",
+								"staffs",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one staff",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/user-identity/staffs/8",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user-identity",
+								"staffs",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all staffs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/user-identity/staffs/all",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user-identity",
+								"staffs",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"email\": \"admin@example.com\",\r\n    \"password\": \"SecurePassword123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjo4LCJyb2xlIjp7InVwZGF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImNyZWF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImRlbGV0ZWRBdCI6bnVsbCwiaWQiOjEsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbXX0sImlhdCI6MTc0MzY2MTc4MiwiZXhwIjoxNzQzNjY1MzgyfQ.xOg29U-cTOIrZwo4z1BhTjSFTbPgwGgbLYkOZq2XnZI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/auth/profile",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/auth/profile",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "179"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b3-HDoVyQKItWfa4NQlFv18VvSLE/Y\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 03 Apr 2025 07:05:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 8,\n    \"email\": \"admin@example.com\",\n    \"role\": {\n        \"updatedAt\": \"2025-04-02T02:21:10.535Z\",\n        \"createdAt\": \"2025-04-02T02:21:10.535Z\",\n        \"deletedAt\": null,\n        \"id\": 1,\n        \"name\": \"admin\",\n        \"permissions\": []\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "role",
+			"item": [
+				{
+					"name": "create role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"staff\": 5,\r\n  \"name\": \"supervisor\"\r\n//   \"permissions\": [\r\n//     {\r\n//       \"id\": \"1\",\r\n//       \"name\": \"staff_creates\",\r\n//       \"description\": \"Create staffs\",\r\n//       \"path\":\"\"\r\n//     },\r\n//     {\r\n//       \"id\": \"2\",\r\n//       \"name\": \"user_delete\",\r\n//       \"description\": \"Delete staffs\"\r\n//     }\r\n//   ],\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/roles",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "events",
+			"item": [
+				{
+					"name": "create event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjo4LCJyb2xlIjp7InVwZGF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImNyZWF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImRlbGV0ZWRBdCI6bnVsbCwiaWQiOjEsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbXX0sImlhdCI6MTc0MzY4ODEyMCwiZXhwIjoxNzQzNjkxNzIwfQ.AnIOPqkd9bOw6JEgczYuz7Wnl8xO4A2DFe2Qqelctpg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tech Conference 2025\",\r\n    \"description\": \"A conference for tech enthusiasts.\",\r\n    \"location\": \"Dubai Expo Center\",\r\n    \"startDate\": \"2025-06-15\",\r\n    \"endDate\": \"2025-06-16\",\r\n    \"isActive\": true,\r\n    \"tickets\": [\r\n        {\r\n            \"type\": \"VIP\",\r\n            \"price\": 10,\r\n            \"quantityAvailable\": 100,\r\n            \"quantityTotal\": 105\r\n        },\r\n          {\r\n            \"type\": \"Economic\",\r\n            \"price\": 1,\r\n            \"quantityAvailable\": 100,\r\n            \"quantityTotal\": 105\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/events",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjo4LCJyb2xlIjp7InVwZGF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImNyZWF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImRlbGV0ZWRBdCI6bnVsbCwiaWQiOjEsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbXX0sImlhdCI6MTc0MzY4ODEyMCwiZXhwIjoxNzQzNjkxNzIwfQ.AnIOPqkd9bOw6JEgczYuz7Wnl8xO4A2DFe2Qqelctpg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tech Conference 2025\",\r\n    \"description\": \"A conference for tech enthusiasts.\",\r\n    \"location\": \"Dubai Expo Center\",\r\n    \"startDate\": \"2025-06-15\",\r\n    \"endDate\": \"2025-06-16\",\r\n    \"isActive\": true,\r\n    \"tickets\": [\r\n        {\r\n            \"type\": \"VIP\",\r\n            \"price\": 10,\r\n            \"quantityAvailable\":50,\r\n            \"quantityTotal\": 100,\r\n            \"id\": 4\r\n        },\r\n        {\r\n            \"type\": \"Economic\",\r\n            \"price\": 1,\r\n            \"quantityAvailable\":480,\r\n            \"quantityTotal\": 500,\r\n            \"id\": 5\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/events/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one event",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjo4LCJyb2xlIjp7InVwZGF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImNyZWF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImRlbGV0ZWRBdCI6bnVsbCwiaWQiOjEsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbXX0sImlhdCI6MTc0MzY2MTc4MiwiZXhwIjoxNzQzNjY1MzgyfQ.xOg29U-cTOIrZwo4z1BhTjSFTbPgwGgbLYkOZq2XnZI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/events/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/events/4",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"events",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "736"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2e0-jqHflVmfJCsXWeLtCBmiDGiJuek\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 03 Apr 2025 07:06:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"updatedAt\": \"2025-04-03T04:43:25.449Z\",\n    \"createdAt\": \"2025-04-03T04:38:56.068Z\",\n    \"deletedAt\": null,\n    \"id\": 4,\n    \"createdBy\": null,\n    \"updatedBy\": null,\n    \"name\": \"Tech Conference 2025\",\n    \"description\": \"A conference for tech enthusiasts.\",\n    \"location\": \"Dubai Expo Center\",\n    \"startDate\": \"2025-06-14T21:00:00.000Z\",\n    \"endDate\": \"2025-06-15T21:00:00.000Z\",\n    \"isActive\": true,\n    \"tickets\": [\n        {\n            \"updatedAt\": \"2025-04-03T04:43:25.449Z\",\n            \"createdAt\": \"2025-04-03T04:41:49.425Z\",\n            \"deletedAt\": null,\n            \"id\": 5,\n            \"type\": \"Economic\",\n            \"price\": \"1.00\",\n            \"quantityAvailable\": 2,\n            \"quantityTotal\": 5,\n            \"orderItems\": []\n        },\n        {\n            \"updatedAt\": \"2025-04-03T04:43:25.449Z\",\n            \"createdAt\": \"2025-04-03T04:41:49.425Z\",\n            \"deletedAt\": null,\n            \"id\": 4,\n            \"type\": \"VIP\",\n            \"price\": \"10.00\",\n            \"quantityAvailable\": 2,\n            \"quantityTotal\": 10,\n            \"orderItems\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "get all events",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjo4LCJyb2xlIjp7InVwZGF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImNyZWF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImRlbGV0ZWRBdCI6bnVsbCwiaWQiOjEsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbXX0sImlhdCI6MTc0MzY2MTc4MiwiZXhwIjoxNzQzNjY1MzgyfQ.xOg29U-cTOIrZwo4z1BhTjSFTbPgwGgbLYkOZq2XnZI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/events/all?start_date=2025-06-15&location=Dubai&availability=false",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"all"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "2025-06-15"
+								},
+								{
+									"key": "location",
+									"value": "Dubai"
+								},
+								{
+									"key": "availability",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjo4LCJyb2xlIjp7InVwZGF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImNyZWF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImRlbGV0ZWRBdCI6bnVsbCwiaWQiOjEsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbXX0sImlhdCI6MTc0MzY2NTQ1OSwiZXhwIjoxNzQzNjY5MDU5fQ.Jr-Zod1JyM0wEXFB1kj-3K0xw9D2mobKQ7We9aeQymY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/events/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "create order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjo4LCJyb2xlIjp7InVwZGF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImNyZWF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImRlbGV0ZWRBdCI6bnVsbCwiaWQiOjEsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbXX0sImlhdCI6MTc0MzY4MDkzMCwiZXhwIjoxNzQzNjg0NTMwfQ.aGidn4owbEgGC_A0YQtdf3JGUTgMeOY0Jk158wmw8A8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"ticketId\": 4,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"ticketId\": 5,\r\n            \"quantity\": 1\r\n        }\r\n    ],\r\n    \"customerEmail\": \"gahenm.dev@example.com\",\r\n    \"customerPhoneNumber\": \"01093072634\",\r\n    \"customerName\": \"ghaenm Arsenal\",\r\n    \"promoCode\": \"DISCOUNT10\",\r\n    \"specialRequests\": \"Please provide aisle seats\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sucess",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n       \"items\": [\r\n         {\r\n           \"ticketId\": 4,\r\n           \"quantity\": 2,\r\n           \"ticketType\": \"VIP\",\r\n           \"price\": 100.50\r\n         },\r\n         {\r\n           \"ticketId\": 5,\r\n           \"quantity\": 1,\r\n           \"ticketType\": \"General\",\r\n           \"price\": 50.00\r\n         }\r\n       ],\r\n       \"customerEmail\": \"gahenm.dev@example.com\",\r\n       \"customerName\": \"ghaenm Arsenal\",\r\n       \"promoCode\": \"DISCOUNT10\",\r\n       \"specialRequests\": \"Please provide aisle seats\"\r\n     }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "222"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"de-WEw4nNX9NeAdbgbu6reDXXMk6IU\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 03 Apr 2025 07:38:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"customer\": {\n        \"id\": 8\n    },\n    \"status\": \"pending\",\n    \"orderDate\": \"2025-04-03T07:38:19.635Z\",\n    \"totalAmount\": 21,\n    \"paymentReference\": null,\n    \"updatedAt\": \"2025-04-03T05:38:19.636Z\",\n    \"createdAt\": \"2025-04-03T05:38:19.636Z\",\n    \"deletedAt\": null,\n    \"id\": 5\n}"
+						}
+					]
+				},
+				{
+					"name": "confirm order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjo4LCJyb2xlIjp7InVwZGF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImNyZWF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImRlbGV0ZWRBdCI6bnVsbCwiaWQiOjEsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbXX0sImlhdCI6MTc0MzY4MDkzMCwiZXhwIjoxNzQzNjg0NTMwfQ.aGidn4owbEgGC_A0YQtdf3JGUTgMeOY0Jk158wmw8A8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"paymentReference\":\"E& Wallet\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/9/confirm",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"9",
+								"confirm"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sucess",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"paymentReference\":\"E& Wallet\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/5/confirm",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"5",
+										"confirm"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "216"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d8-YWQ2hhdT10OLeNur6sE2+xA6C64\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 03 Apr 2025 07:42:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"updatedAt\": \"2025-04-03T05:42:00.443Z\",\n    \"createdAt\": \"2025-04-03T05:38:19.636Z\",\n    \"deletedAt\": null,\n    \"id\": 5,\n    \"totalAmount\": \"21.00\",\n    \"orderDate\": \"2025-04-03T07:38:19.635Z\",\n    \"status\": \"confirmed\",\n    \"paymentReference\": \"E& Wallet\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjo4LCJyb2xlIjp7InVwZGF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImNyZWF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImRlbGV0ZWRBdCI6bnVsbCwiaWQiOjEsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbXX0sImlhdCI6MTc0MzY2NTQ1OSwiZXhwIjoxNzQzNjY5MDU5fQ.Jr-Zod1JyM0wEXFB1kj-3K0xw9D2mobKQ7We9aeQymY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/orders/5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"5"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/5",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "467"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d3-xgptyXPQ57nhS54O+ITS8GUAKNk\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 03 Apr 2025 07:42:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 5,\n    \"orderNumber\": \"ORD-000005\",\n    \"customerEmail\": \"customer8@example.com\",\n    \"customerName\": \"John Doe\",\n    \"items\": [\n        {\n            \"id\": 5,\n            \"ticketId\": 4,\n            \"ticketType\": \"VIP\",\n            \"eventName\": \"Tech Conference 2025\",\n            \"quantity\": 2,\n            \"price\": \"10.00\",\n            \"subtotal\": \"20.00\"\n        },\n        {\n            \"id\": 6,\n            \"ticketId\": 5,\n            \"ticketType\": \"Economic\",\n            \"eventName\": \"Tech Conference 2025\",\n            \"quantity\": 1,\n            \"price\": \"1.00\",\n            \"subtotal\": \"1.00\"\n        }\n    ],\n    \"totalAmount\": \"21.00\",\n    \"orderDate\": \"2025-04-03T07:38:19.635Z\",\n    \"status\": \"confirmed\",\n    \"paymentStatus\": \"paid\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get all arders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjo4LCJyb2xlIjp7InVwZGF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImNyZWF0ZWRBdCI6IjIwMjUtMDQtMDJUMDI6MjE6MTAuNTM1WiIsImRlbGV0ZWRBdCI6bnVsbCwiaWQiOjEsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbXX0sImlhdCI6MTc0MzY4NDY5NiwiZXhwIjoxNzQzNjg4Mjk2fQ.meWWWUN48iLSkem2kc4Op2BXYYVVfY9LOLHBpo9pGw0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/orders/all",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1034"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"40a-TMlb6is58/MerTTz7ybZuCQ5eWk\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 03 Apr 2025 13:01:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"items\": [\n        {\n            \"id\": 5,\n            \"orderNumber\": \"ORD-000005\",\n            \"customerEmail\": \"customer8@example.com\",\n            \"customerName\": \"John Doe\",\n            \"items\": [\n                {\n                    \"id\": 5,\n                    \"ticketId\": 4,\n                    \"ticketType\": \"VIP\",\n                    \"eventName\": \"Tech Conference 2025\",\n                    \"quantity\": 2,\n                    \"price\": \"10.00\",\n                    \"subtotal\": \"20.00\"\n                },\n                {\n                    \"id\": 6,\n                    \"ticketId\": 5,\n                    \"ticketType\": \"Economic\",\n                    \"eventName\": \"Tech Conference 2025\",\n                    \"quantity\": 1,\n                    \"price\": \"1.00\",\n                    \"subtotal\": \"1.00\"\n                }\n            ],\n            \"totalAmount\": \"21.00\",\n            \"orderDate\": \"2025-04-03T07:38:19.635Z\",\n            \"status\": \"confirmed\",\n            \"paymentStatus\": \"paid\"\n        },\n        {\n            \"id\": 9,\n            \"orderNumber\": \"ORD-000009\",\n            \"customerEmail\": \"customer8@example.com\",\n            \"customerName\": \"John Doe\",\n            \"items\": [\n                {\n                    \"id\": 7,\n                    \"ticketId\": 4,\n                    \"ticketType\": \"VIP\",\n                    \"eventName\": \"Tech Conference 2025\",\n                    \"quantity\": 1,\n                    \"price\": \"10.00\",\n                    \"subtotal\": \"10.00\"\n                },\n                {\n                    \"id\": 8,\n                    \"ticketId\": 5,\n                    \"ticketType\": \"Economic\",\n                    \"eventName\": \"Tech Conference 2025\",\n                    \"quantity\": 1,\n                    \"price\": \"1.00\",\n                    \"subtotal\": \"1.00\"\n                }\n            ],\n            \"totalAmount\": \"11.00\",\n            \"orderDate\": \"2025-04-03T11:55:37.552Z\",\n            \"status\": \"confirmed\",\n            \"paymentStatus\": \"paid\"\n        }\n    ],\n    \"meta\": {\n        \"currentPage\": 1,\n        \"itemCount\": 2,\n        \"itemsPerPage\": 10,\n        \"totalItems\": 2,\n        \"totalPages\": 1\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "http://localhost:9200/_security/user/elastic/_password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"password\": \"newpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/_security/user/elastic/_password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_security",
+						"user",
+						"elastic",
+						"_password"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST \"http://localhost:9200/_security/user/elastic/_password\" -H \"Content-Type: application/json\" -d '{\r\n  \"password\": \"newpassword\"\r\n}'"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
