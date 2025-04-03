@@ -127,7 +127,7 @@ export class EventsService extends BaseService {
     }
   }
 
-  async findAllActiveEvents(): Promise<Event[]> {
+  async findAllActiveEvents(query): Promise<Event[]> {
     return this.eventRepository.find({
       where: {
         isActive: true,
@@ -146,12 +146,15 @@ export class EventsService extends BaseService {
     const queryBuilder = this.eventRepository
       .createQueryBuilder('event')
       .leftJoinAndSelect('event.tickets', 'ticket')
-      .leftJoinAndSelect('ticket.orderItems', 'orderItem')
-      .leftJoinAndSelect('orderItem.order', 'order')
+
       .where('event.id = :id', { id });
 
     if (customerId) {
       queryBuilder.andWhere('order.customerId = :customerId', { customerId });
+    } else {
+      queryBuilder
+        .leftJoinAndSelect('ticket.orderItems', 'orderItem')
+        .leftJoinAndSelect('orderItem.order', 'order');
     }
 
     const event = await queryBuilder.getOne();
