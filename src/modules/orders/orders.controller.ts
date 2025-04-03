@@ -13,13 +13,14 @@ import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ConfirmOrderDto } from './dto/confirm-order.dto';
 import { OwnGuard } from '../auth/guards/own.guard';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Controller('orders')
 @UseGuards(JwtAuthGuard)
 export class OrdersController {
   constructor(
     private readonly ordersService: OrdersService,
-    // private readonly notificationsService: NotificationsService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   @Post()
@@ -30,7 +31,6 @@ export class OrdersController {
     );
 
     // Emit order created event when add rabbit and
-    // await this.notificationsService.publishOrderCreated(order);
 
     return order;
   }
@@ -47,12 +47,18 @@ export class OrdersController {
     );
 
     // Emit order confirmed event if needed
-    // await this.notificationsService.publishOrderConfirmed(order);
+    await this.notificationsService.publishOrderCreated(order);
 
     return order;
   }
 
-  @Get()
+  @Get(':id/my-order')
+  @UseGuards(JwtAuthGuard, OwnGuard)
+  async findOrdersByCustomer(@Param('id') id: number, @Request() req) {
+    return this.ordersService.findOrdersByCustomer(id, req.user.id);
+  }
+
+  @Get('all')
   @UseGuards(JwtAuthGuard, OwnGuard)
   async findAllForCustomer(@Request() req) {
     return this.ordersService.findOrdersByCustomer(req.user.id);

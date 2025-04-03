@@ -16,6 +16,12 @@ export class Order extends BaseEntityWithId {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   orderDate: Date;
+  @Column({ nullable: true })
+  customerEmail: string;
+  @Column({ nullable: true })
+  customerPhoneNumber: string;
+
+  customerName;
 
   @Column({ default: 'pending' })
   status: 'pending' | 'confirmed' | 'cancelled' | 'completed';

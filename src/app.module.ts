@@ -14,10 +14,19 @@ import { EventsModule } from './modules/events/events.module';
 import { TicketsModule } from './modules/tickets/tickets.module';
 import { SearchModule } from './modules/search/search.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 import elasticsearchConfig from './config/elasticsearch.config';
+import { CacheModule } from '@nestjs/cache-manager';
+import rabbitmqConfig from './config/rabbitmq.config';
 
 @Module({
   imports: [
+    CacheModule.register({
+      host: '127.0.0.1',
+      port: 6379,
+      db: 0,
+      ttl: 100000,
+    }),
     I18nModule.forRootAsync({
       useFactory: () => ({
         fallbackLanguage: 'ar',
@@ -31,7 +40,7 @@ import elasticsearchConfig from './config/elasticsearch.config';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig, elasticsearchConfig],
+      load: [databaseConfig, elasticsearchConfig, rabbitmqConfig],
     }),
 
     TypeOrmModule.forRootAsync({
@@ -61,6 +70,7 @@ import elasticsearchConfig from './config/elasticsearch.config';
     TicketsModule,
     SearchModule,
     OrdersModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

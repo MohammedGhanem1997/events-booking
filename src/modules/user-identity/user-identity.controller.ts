@@ -22,7 +22,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.auth.guard';
 export class UserIdentityController {
   constructor(private readonly userIdentityService: UserIdentityService) {}
 
-  @Post('customers')
+  @Post('register')
   createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
     return this.userIdentityService.createCustomer(createCustomerDto);
   }
