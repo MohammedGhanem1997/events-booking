@@ -18,6 +18,9 @@ export class CreateOrderDto {
   customerEmail: string;
 
   @IsNotEmpty()
+  customerPhoneNumber: string;
+
+  @IsNotEmpty()
   customerName: string;
 
   // Optional fields

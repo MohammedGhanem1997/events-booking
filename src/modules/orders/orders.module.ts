@@ -8,6 +8,7 @@ import { Order } from './entities/order.entity';
 import { AuthModule } from '../auth/auth.module';
 import { EventsService } from '../events/events.service';
 import { Customer } from '../user-identity/entities/customer.entity';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import { Customer } from '../user-identity/entities/customer.entity';
     AuthModule,
   ],
   controllers: [OrdersController],
-  providers: [OrdersService, EventsService, Logger],
+  providers: [OrdersService, EventsService, Logger, NotificationsService],
 })
 export class OrdersModule {}

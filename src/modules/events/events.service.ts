@@ -145,6 +145,17 @@ export class EventsService extends BaseService {
       if (query.name) {
         qb.andWhere('event.name LIKE :name', { name: `%${query.name}%` });
       }
+      if (query.availability === 'true') {
+        qb.andWhere(
+          '(SELECT SUM(t."quantityAvailable") FROM ticket t WHERE t."eventId" = event.id) > 0',
+        );
+      }
+      if (query.availability === 'false') {
+        qb.andWhere(
+          '(SELECT SUM(t."quantityAvailable") FROM ticket t WHERE t."eventId" = event.id) < 1',
+        );
+      }
+
       if (query.description) {
         qb.andWhere('event.description LIKE :description', {
           description: `%${query.description}%`,

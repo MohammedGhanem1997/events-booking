@@ -9,12 +9,14 @@ import {
   LessThanOrEqual,
   MoreThanOrEqual,
   Repository,
+  SelectQueryBuilder,
 } from 'typeorm';
 import { OrderItem } from './entities/rder-item.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { Customer } from '../user-identity/entities/customer.entity';
 import { OrderResponseDto } from './dto/order-response.dto';
 import { OrderQueryDto } from './dto/order-query.dto';
+import { IPaginationMeta, Pagination } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class OrdersService extends BaseService {
@@ -125,36 +127,73 @@ export class OrdersService extends BaseService {
   }
 
   async findOrdersByCustomer(
-    customerId: number,
-    query?: OrderQueryDto,
-  ): Promise<OrderResponseDto[]> {
-    const where: any = { customer: { id: customerId } };
+    query: OrderQueryDto,
+    customerId?: number,
+  ): Promise<Pagination<OrderResponseDto, IPaginationMeta>> {
+    try {
+      const { sort, page = 1, limit = 10 } = query || {};
 
-    // Apply filters from query
-    if (query) {
-      if (query.fromDate && query.toDate) {
-        where.orderDate = Between(
-          new Date(query.fromDate),
-          new Date(query.toDate),
-        );
-      } else if (query.fromDate) {
-        where.orderDate = MoreThanOrEqual(new Date(query.fromDate));
-      } else if (query.toDate) {
-        where.orderDate = LessThanOrEqual(new Date(query.toDate));
+      const qb: SelectQueryBuilder<Order> = this.orderRepository
+        .createQueryBuilder('order')
+        .leftJoinAndSelect('order.items', 'orderItem')
+        .leftJoinAndSelect('orderItem.ticket', 'ticket')
+        .leftJoinAndSelect('ticket.event', 'event')
+        .leftJoinAndSelect('order.customer', 'customer');
+      if (customerId || customerId != null) {
+        qb.where('customer.id = :customerId', { customerId });
       }
 
-      if (query.status) {
-        where.status = query.status;
+      // Filtering by date range
+      if (query?.fromDate && query?.toDate) {
+        qb.andWhere('order.orderDate BETWEEN :fromDate AND :toDate', {
+          fromDate: query.fromDate,
+          toDate: query.toDate,
+        });
+      } else if (query?.fromDate) {
+        qb.andWhere('order.orderDate >= :fromDate', {
+          fromDate: query.fromDate,
+        });
+      } else if (query?.toDate) {
+        qb.andWhere('order.orderDate <= :toDate', { toDate: query.toDate });
       }
+
+      // Filtering by status
+      if (query?.status) {
+        qb.andWhere('order.status = :status', { status: query.status });
+      }
+
+      // Sorting
+      const allowedFieldsToSort = ['orderDate', 'status'];
+      if (sort) {
+        const [field, direction] = this.buildSortParams<{
+          orderDate: Date;
+          status: string;
+        }>(sort);
+
+        if (allowedFieldsToSort.includes(field)) {
+          qb.orderBy(`order.${field}`, direction);
+        }
+      }
+
+      // Paginate results
+      const result = await this._paginate<Order>(qb, {
+        page,
+        limit,
+      });
+      // Map orders to DTOs
+      const mappedOrders = result.items.map((order) =>
+        this.mapToOrderResponseDto(order),
+      );
+
+      // Return a new paginated response with the mapped items
+      return {
+        ...result,
+        items: mappedOrders,
+      };
+    } catch (error) {
+      console.error(error);
+      this.customErrorHandle(error);
     }
-
-    const orders = await this.orderRepository.find({
-      where,
-      relations: ['items', 'items.ticket', 'items.ticket.event', 'customer'],
-      order: { orderDate: 'DESC' },
-    });
-
-    return orders.map((order) => this.mapToOrderResponseDto(order));
   }
 
   async findOrderById(
