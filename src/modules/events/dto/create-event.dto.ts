@@ -22,10 +22,10 @@ export class CreateEventDto extends PartialType(BaseEntityWithMetaDto) {
   @IsNotEmpty()
   location: string;
 
-  @IsDate()
+  @IsDateString()
   startDate: Date;
 
-  @IsDate()
+  @IsDateString()
   endDate: Date;
 
   @IsBoolean()

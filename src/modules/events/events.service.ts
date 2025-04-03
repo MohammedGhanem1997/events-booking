@@ -38,7 +38,7 @@ export class EventsService extends BaseService {
     const savedEvent = await this.eventRepository.save(event);
 
     // Index in Elasticsearch
-    await this.searchService.indexEvent(savedEvent);
+    // await this.searchService.indexEvent(savedEvent);
 
     return savedEvent;
   }
