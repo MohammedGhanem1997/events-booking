@@ -37,9 +37,9 @@ export class EventsController {
     return this.eventsService.searchEvents(searchEventsDto.query);
   }
 
-  @Get()
-  findAll() {
-    return this.eventsService.findAllActiveEvents();
+  @Get('all')
+  findAll(@Query() query) {
+    return this.eventsService.findAllActiveEvents(query);
   }
 
   @Get(':id')

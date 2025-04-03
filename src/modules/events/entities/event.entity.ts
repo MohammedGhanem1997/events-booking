@@ -19,7 +19,10 @@ export class Event extends BaseEntityWithMeta {
   @Column({ type: 'timestamp' })
   endDate: Date;
 
-  @OneToMany(() => Ticket, (ticket) => ticket.event, { nullable: true })
+  @OneToMany(() => Ticket, (ticket) => ticket.event, {
+    nullable: true,
+    cascade: true,
+  })
   tickets?: Ticket[];
 
   @Column({ default: true })

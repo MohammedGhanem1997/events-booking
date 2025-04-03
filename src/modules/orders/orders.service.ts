@@ -45,13 +45,17 @@ export class OrdersService extends BaseService {
       order.customer = { id: customerId } as Customer;
       order.status = 'pending';
       order.orderDate = new Date();
+      console.log('totalAmount', order);
+      let totalAmount = 0;
+      order.totalAmount = totalAmount;
 
       const savedOrder = await queryRunner.manager.save(order);
 
-      let totalAmount = 0;
       const orderItems: OrderItem[] = [];
 
       // Process each item in the order
+      console.log('totalAmount', totalAmount);
+
       for (const item of createOrderDto.items) {
         const ticket = await queryRunner.manager.findOne(Ticket, {
           where: { id: item.ticketId },
@@ -60,7 +64,7 @@ export class OrdersService extends BaseService {
 
         if (!ticket || ticket.quantityAvailable < item.quantity) {
           this._getBadRequestError(
-            `Not enough tickets available for ticket ID ${item.ticketId}`,
+            `Insufficient tickets available" ${item.ticketId}`,
           );
         }
 
@@ -70,7 +74,7 @@ export class OrdersService extends BaseService {
 
         // Create order item
         const orderItem = new OrderItem();
-        orderItem.order = savedOrder;
+        orderItem.order = order;
         orderItem.ticket = ticket;
         orderItem.quantity = item.quantity;
         orderItem.priceAtPurchase = ticket.price;

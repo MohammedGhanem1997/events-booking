@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Ticket } from '../tickets/entities/ticket.entity';
-import { Connection, MoreThan, Repository } from 'typeorm';
+import { Connection, MoreThan, Repository, SelectQueryBuilder } from 'typeorm';
 import { SearchService } from '../search/search.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { Customer } from '../user-identity/entities/customer.entity';
@@ -12,6 +12,8 @@ import { BaseService } from 'src/abstract';
 import { OrderItem } from '../orders/entities/rder-item.entity';
 import { CreateOrderDto } from '../orders/dto/create-order.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { RESPONSE_MESSAGES } from 'src/types/responseMessages';
+import { IPaginationMeta, Pagination } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class EventsService extends BaseService {
@@ -38,7 +40,7 @@ export class EventsService extends BaseService {
     const savedEvent = await this.eventRepository.save(event);
 
     // Index in Elasticsearch
-    await this.searchService.indexEvent(savedEvent);
+    // await this.searchService.indexEvent(savedEvent);
 
     return savedEvent;
   }
@@ -127,31 +129,86 @@ export class EventsService extends BaseService {
     }
   }
 
-  async findAllActiveEvents(): Promise<Event[]> {
-    return this.eventRepository.find({
-      where: {
-        isActive: true,
-        endDate: MoreThan(new Date()),
-      },
-      relations: {
-        tickets: {
-          orderItems: true, // Load order items for each ticket
-        },
-      },
-      order: { startDate: 'ASC' },
-    });
+  async findAllActiveEvents(
+    query,
+  ): Promise<Pagination<Event, IPaginationMeta>> {
+    try {
+      const { sort, page = 1, limit = 10 } = query;
+      const qb: SelectQueryBuilder<Event> = this.eventRepository
+        .createQueryBuilder('event')
+        .leftJoinAndSelect('event.tickets', 'ticket')
+        .leftJoinAndSelect('ticket.orderItems', 'orderItem')
+        .where('event.isActive = :isActive', { isActive: true })
+        .andWhere('event.endDate > :now', { now: new Date() });
+
+      // Filtering
+      if (query.name) {
+        qb.andWhere('event.name LIKE :name', { name: `%${query.name}%` });
+      }
+      if (query.description) {
+        qb.andWhere('event.description LIKE :description', {
+          description: `%${query.description}%`,
+        });
+      }
+      if (query.location) {
+        qb.andWhere('event.location LIKE :location', {
+          location: `%${query.location}%`,
+        });
+      }
+
+      if (query.start_date && query.end_date) {
+        qb.andWhere('event.startDate BETWEEN :startDate AND :endDate', {
+          startDate: query.start_date,
+          endDate: query.end_date,
+        });
+      } else if (query.start_date) {
+        qb.andWhere('event.startDate >= :startDate', {
+          startDate: query.start_date,
+        });
+      } else if (query.end_date) {
+        qb.andWhere('event.endDate <= :endDate', { endDate: query.end_date });
+      }
+
+      // Sorting
+      const allowedFieldsToSort = ['name', 'startDate', 'endDate', 'location'];
+      if (sort) {
+        const [field, direction] = this.buildSortParams<{
+          name: string;
+          startDate: Date;
+          endDate: Date;
+          location: string;
+        }>(sort);
+
+        if (allowedFieldsToSort.includes(field)) {
+          qb.orderBy(`event.${field}`, direction);
+        }
+      }
+      let result = await this._paginate<Event>(qb, {
+        page: page,
+        limit: limit,
+      });
+
+      return result;
+    } catch (error) {
+      console.log(error);
+
+      this.customErrorHandle(error);
+    }
   }
 
   async findEventById(id: number, customerId?: number): Promise<Event> {
     const queryBuilder = this.eventRepository
       .createQueryBuilder('event')
       .leftJoinAndSelect('event.tickets', 'ticket')
-      .leftJoinAndSelect('ticket.orderItems', 'orderItem')
-      .leftJoinAndSelect('orderItem.order', 'order')
+
       .where('event.id = :id', { id });
 
     if (customerId) {
       queryBuilder.andWhere('order.customerId = :customerId', { customerId });
+    } else {
+      queryBuilder
+        .leftJoinAndSelect('ticket.orderItems', 'orderItem')
+        .leftJoinAndSelect('orderItem.order', 'order');
     }
 
     const event = await queryBuilder.getOne();
@@ -205,46 +262,52 @@ export class EventsService extends BaseService {
     return this.eventRepository.save(event);
   }
 
-  async deleteEvent(id: number): Promise<void> {
-    const event = await this.eventRepository.findOne({
-      where: { id },
-      relations: {
-        tickets: {
-          orderItems: true,
-        },
-      },
-    });
-
-    if (!event) {
-      this._getNotFoundError(`Event with ID ${id} not found`);
-    }
-
-    // Check if any ticket has order items (orders)
-    const hasOrders = event.tickets.some(
-      (ticket) => ticket.orderItems?.length > 0,
-    );
-
-    if (hasOrders) {
-      // Soft delete if orders exist
-      event.isActive = false;
-      await this.eventRepository.save(event);
-    } else {
-      // Hard delete if no orders
-      await this.eventRepository.remove(event);
-    }
-
-    // Update search index accordingly
+  async deleteEvent(id: number): Promise<object> {
     try {
-      if (hasOrders) {
-        await this.searchService.updateEventIndex(id, { isActive: false });
-      } else {
-        await this.searchService.deleteEventIndex(id);
+      const event = await this.eventRepository.findOne({
+        where: { id },
+        relations: {
+          tickets: {
+            orderItems: true,
+          },
+        },
+      });
+
+      if (!event) {
+        this._getNotFoundError(`Event with ID ${id} not found`);
       }
-    } catch (err) {
-      this.logger.error(
-        `Search index update failed for event ${id}`,
-        err.stack,
+
+      // Check if any ticket has order items (orders)
+      const hasOrders = event.tickets.some(
+        (ticket) => ticket.orderItems?.length > 0,
       );
+
+      if (hasOrders) {
+        // Soft delete if orders exist
+        // event.isActive = false;
+        await this.eventRepository.softRemove(event);
+      } else {
+        // Hard delete if no orders
+        await this.eventRepository.remove(event);
+      }
+      return {
+        message: RESPONSE_MESSAGES.COMMON.DELETED_SUCCESSFULLY,
+      };
+    } catch (error) {
+      this.customErrorHandle(error);
     }
+    // Update search index accordingly
+    // try {
+    //   if (hasOrders) {
+    //     await this.searchService.updateEventIndex(id, { isActive: false });
+    //   } else {
+    //     await this.searchService.deleteEventIndex(id);
+    //   }
+    // } catch (err) {
+    //   this.logger.error(
+    //     `Search index update failed for event ${id}`,
+    //     err.stack,
+    //   );
+    // }
   }
 }
