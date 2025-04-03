@@ -64,7 +64,7 @@ export class OrdersService extends BaseService {
 
         if (!ticket || ticket.quantityAvailable < item.quantity) {
           this._getBadRequestError(
-            `Not enough tickets available for ticket ID ${item.ticketId}`,
+            `Insufficient tickets available" ${item.ticketId}`,
           );
         }
 
