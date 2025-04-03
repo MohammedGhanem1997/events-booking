@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -52,16 +53,10 @@ export class OrdersController {
     return order;
   }
 
-  @Get(':id/my-order')
-  @UseGuards(JwtAuthGuard, OwnGuard)
-  async findOrdersByCustomer(@Param('id') id: number, @Request() req) {
-    return this.ordersService.findOrdersByCustomer(id, req.user.id);
-  }
-
   @Get('all')
   @UseGuards(JwtAuthGuard, OwnGuard)
-  async findAllForCustomer(@Request() req) {
-    return this.ordersService.findOrdersByCustomer(req.user.id);
+  async findAllForCustomer(@Query() query, @Request() req) {
+    return this.ordersService.findOrdersByCustomer(query, req.user.id);
   }
 
   @Get(':id')

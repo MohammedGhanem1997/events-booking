@@ -17,6 +17,7 @@ export class OwnGuard implements CanActivate {
     // If the user has no role, assume it's a customer
     if (!user.role) {
       const userId = user.id;
+      console.log('userId->', userId);
 
       // Inject userId into query parameters
       if (request.method === 'GET' || request.method === 'DELETE') {
